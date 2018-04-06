@@ -5,12 +5,14 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
     Spaceship spaceship;
+    public int hp = 1;
 
 	// Use this for initialization
 	IEnumerator Start () {
         spaceship = GetComponent<Spaceship>();
 
-        spaceship.Move(transform.up * -1);
+        Move(transform.up * -1);
+
         if(spaceship.canShot == false)
         {
             yield break;
@@ -28,15 +30,32 @@ public class Enemy : MonoBehaviour {
         }
 	}
 
+    public void Move(Vector2 direction)
+    {
+        GetComponent<Rigidbody2D>().velocity = direction * spaceship.speed;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string layerName = LayerMask.LayerToName(collision.gameObject.layer);
 
         if (layerName != "Bullet(Player)") return;
 
+        Transform playerBulletTransform = collision.transform.parent;
+        Bullet bullet = playerBulletTransform.GetComponent<Bullet>();
+
+        hp = hp - bullet.power;
         Destroy(collision.gameObject);
-        spaceship.Explosion();
-        Destroy(gameObject);
+
+        if (hp <= 0)
+        {
+            spaceship.Explosion();
+            Destroy(gameObject);
+        }
+        else
+        {
+            spaceship.GetAnimator().SetTrigger("Damage");
+        }
     }
 
     // Update is called once per frame

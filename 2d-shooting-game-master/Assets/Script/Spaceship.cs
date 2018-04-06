@@ -10,10 +10,11 @@ public class Spaceship : MonoBehaviour {
     public GameObject bullet;
     public bool canShot;
     public GameObject explosion;
+    private Animator animator;
 
 	// Use this for initialization
 	void Start () {
-		
+        animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -31,8 +32,9 @@ public class Spaceship : MonoBehaviour {
         Instantiate(bullet, origin.position, origin.rotation);
     }
 
-    public void Move(Vector2 direction)
+    public Animator GetAnimator()
     {
-        GetComponent<Rigidbody2D>().velocity = direction * speed;       
+        return animator;
     }
+
 }
