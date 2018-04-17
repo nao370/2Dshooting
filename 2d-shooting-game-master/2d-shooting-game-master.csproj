@@ -86,6 +86,7 @@
     <Compile Include="Assets\Script\Explosion.cs" />
     <Compile Include="Assets\Script\Manager.cs" />
     <Compile Include="Assets\Script\Player.cs" />
+    <Compile Include="Assets\Script\Score.cs" />
     <Compile Include="Assets\Script\Spaceship.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
